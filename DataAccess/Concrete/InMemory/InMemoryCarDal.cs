@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace DataAccess.Concrete.InMemory
 {
@@ -40,6 +41,16 @@ namespace DataAccess.Concrete.InMemory
             _cars.Add(car);
         }
 
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Car car)
         {
             Car carToUpdate = _cars.SingleOrDefault(c => c.CarId == car.CarId);
@@ -48,6 +59,11 @@ namespace DataAccess.Concrete.InMemory
             carToUpdate.ModelYear = car.ModelYear;
             carToUpdate.DailyPrice = car.DailyPrice;
             carToUpdate.Description = car.Description;
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            throw new NotImplementedException();
         }
 
         public void Delete(Car car)
