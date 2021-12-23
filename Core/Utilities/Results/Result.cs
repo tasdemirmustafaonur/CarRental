@@ -17,6 +17,8 @@ namespace Core.Utilities.Results
         {
             Success = success;
         }
+
+        //get'ler read-only'dir. Constructor'da set edilebilir.
         public bool Success { get; }
         public string Message { get; }
     }
