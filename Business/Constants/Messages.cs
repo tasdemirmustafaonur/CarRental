@@ -18,5 +18,11 @@ namespace Business.Constants
         public static string BrandUpdated = "Marka guncellendi";
         public static string BrandsListed = "Markalar listelendi";
         public static string BrandListed = "Marka listelendi";
+
+        public static string ColorAdded = "Renk eklendi";
+        public static string ColorDeleted = "Renk silindi";
+        public static string ColorUpdated = "Renk guncellendi";
+        public static string ColorsListed = "Renkler listelendi";
+        public static string ColorListed = "Renk listelendi";
     }
 }
