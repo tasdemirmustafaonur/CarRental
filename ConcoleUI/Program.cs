@@ -22,10 +22,21 @@ namespace ConsoleUI
             CarManager carManager = new CarManager(new EfCarDal());
             Car car1 = new Car { BrandId = 2, ColorId = 3, DailyPrice = 1300, ModelYear = "2006", Description = "Araç hakkında bilgi bulunmamaktadır." };
             carManager.Add(car1);
-            foreach (var car in carManager.GetAll())
+
+            var result = carManager.GetAll();
+            if (result.Success==true)
             {
-                Console.WriteLine(car.Description);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.Description);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
+            
         }
 
         private static void CarDelete()
@@ -33,10 +44,20 @@ namespace ConsoleUI
             CarManager carManager = new CarManager(new EfCarDal());
             Car car1 = new Car {CarId = 1002};
             carManager.Delete(car1);
-            foreach (var car in carManager.GetAll())
+
+            var result = carManager.GetAll();
+            if (result.Success==true)
             {
-                Console.WriteLine("{0}  /  {1}",car.CarId,car.DailyPrice);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine("{0}  /  {1}", car.CarId, car.DailyPrice);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            
         }
 
         private static void CarUpdate()
@@ -44,10 +65,20 @@ namespace ConsoleUI
             CarManager carManager = new CarManager(new EfCarDal());
             Car car1 = new Car { CarId = 11, BrandId = 5,ModelYear = "2000"};
             carManager.Update(car1);
-            foreach (var car in carManager.GetAll())
+
+            var result = carManager.GetAll();
+            if (result.Success==true)
             {
-                Console.WriteLine("{0} / {1} / {2} / {3}",car.CarId,car.BrandId,car.ModelYear,car.DailyPrice);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine("{0} / {1} / {2} / {3}", car.CarId, car.BrandId, car.ModelYear, car.DailyPrice);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            
         }
 
         private static void BrandTest()
@@ -63,10 +94,20 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
 
-            foreach (var car in carManager.GetCarDetails())
+            var result = carManager.GetCarDetails();
+            if (result.Success==true)
             {
-                Console.WriteLine("{0}  /  {1} / {2} / {3}",car.CarId,car.BrandName,car.ColorName,car.DailyPrice);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine("{0}  /  {1} / {2} / {3} / {4}", car.CarId, car.BrandName, car.ModelName, car.ColorName, car.DailyPrice);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            
+            
         }
     }
 }
