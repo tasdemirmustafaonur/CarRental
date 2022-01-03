@@ -38,5 +38,13 @@ namespace Business.Constants
         public static string RentalsListed = "Kiralamalar listelendi";
         public static string RentalListed = "Kiralama listelendi";
         public static string RentalCarNotAvailable = "Kiralanmak istenen arac daha once kiralanmis";
+
+        public static string UserAdded = "Kullanici eklendi";
+        public static string UserDeleted = "Kullanici silindi";
+        public static string UserUpdated = "Kullanici güncellendi";
+        public static string UsersListed = "Kullanicilar listelendi";
+        public static string UserListed = "Kullanici listelendi";
+        public static string UserEmailInvalid = "Kullanici e-mail gecersiz";
+        public static string UserPasswordInvalid = "Kullanici sifresi gecersiz";
     }
 }
