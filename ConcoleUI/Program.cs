@@ -10,11 +10,34 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarTest();
+            CustomerManagerAddTest();
+            //UserManagerAddTest();
+            //RentalCarTest();
+            //CarTest();
             //BrandTest();
             //CarDelete();
             //CarAdd();
             //CarUpdate();
+        }
+
+
+        private static void RentalCarTest()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            var x = rentalManager.Add(new Rental {CarId = 4, CustomerId = 1, RentDate = DateTime.Now});
+            Console.WriteLine("{0} -----> {1}",x.Success,x.Message);
+        }
+
+        private static void CustomerManagerAddTest()
+        {
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            customerManager.Add(new Customer {UserId = 5, CompanyName = "Koç"});
+        }
+
+        private static void UserManagerAddTest()
+        {
+            UserManager userManager = new UserManager(new EfUserDal());
+            userManager.Add(new User {FirstName = "Enes", LastName = "Koç", Email = "enes@", Password = "123456"});
         }
 
         private static void CarAdd()
@@ -84,10 +107,16 @@ namespace ConsoleUI
         private static void BrandTest()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            foreach (var brand in brandManager.GetAll())
+
+            var result = brandManager.GetAll();
+            if (result.Success==true)
             {
-                Console.WriteLine(brand.BrandName);
+                foreach (var brand in result.Data)
+                {
+                    Console.WriteLine(brand.BrandName);
+                }
             }
+            
         }
 
         private static void CarTest()
