@@ -18,11 +18,11 @@ namespace DataAccess.Concrete.InMemory
         {
             _cars = new List<Car>
             {
-                new Car{CarId = 1,BrandId = 1,ColorId = 1,ModelYear = "2006",DailyPrice = 100000,Description = "Çıtır Hasarlı"},
-                new Car{CarId = 2,BrandId = 1,ColorId = 1,ModelYear = "2010",DailyPrice = 150000,Description = "Çıtır Hasarlı"},
-                new Car{CarId = 3,BrandId = 2,ColorId = 2,ModelYear = "2011",DailyPrice = 180000,Description = "Çıtır Hasarlı"},
-                new Car{CarId = 4,BrandId = 2,ColorId = 2,ModelYear = "2015",DailyPrice = 200000,Description = "Çıtır Hasarlı"},
-                new Car{CarId = 5,BrandId = 3,ColorId = 3,ModelYear = "2020",DailyPrice = 250000,Description = "Çıtır Hasarlı"},
+                new Car{CarId = 1,BrandId = 1,ColorId = 1,ModelYear = 2006,DailyPrice = 100000,Description = "Çıtır Hasarlı"},
+                new Car{CarId = 2,BrandId = 1,ColorId = 1,ModelYear = 2010,DailyPrice = 150000,Description = "Çıtır Hasarlı"},
+                new Car{CarId = 3,BrandId = 2,ColorId = 2,ModelYear = 2011,DailyPrice = 180000,Description = "Çıtır Hasarlı"},
+                new Car{CarId = 4,BrandId = 2,ColorId = 2,ModelYear = 2015,DailyPrice = 200000,Description = "Çıtır Hasarlı"},
+                new Car{CarId = 5,BrandId = 3,ColorId = 3,ModelYear = 2020,DailyPrice = 250000,Description = "Çıtır Hasarlı"},
             };
         }
 
