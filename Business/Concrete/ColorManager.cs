@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -20,11 +22,13 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
+        [ValidationAspect(typeof(ColorValidator))]
         public IResult Add(Color color)
         {
             return new SuccessResult(Messages.ColorAdded);
         }
 
+        [ValidationAspect(typeof(ColorValidator))]
         public IResult Delete(Color color)
         {
             return new SuccessResult(Messages.ColorDeleted);
@@ -40,6 +44,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Color>(_colorDal.Get(c => c.ColorId == id), Messages.ColorListed);
         }
 
+        [ValidationAspect(typeof(ColorValidator))]
         public IResult Update(Color color)
         {
             return new SuccessResult(Messages.ColorUpdated);
