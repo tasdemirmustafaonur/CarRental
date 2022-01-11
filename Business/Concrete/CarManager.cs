@@ -69,7 +69,7 @@ namespace Business.Concrete
             }
             var deletedCar = _carDal.Get(c => c.CarId == carId);
             _carDal.Delete(deletedCar);
-            return new SuccessResult();
+            return new SuccessResult(Messages.CarDeleted);
         }
 
         [ValidationAspect(typeof(CarValidator))]
@@ -81,7 +81,7 @@ namespace Business.Concrete
                 return rulesResult;
             }
             _carDal.Update(car);
-            return new SuccessResult();
+            return new SuccessResult(Messages.CarUpdated);
         }
 
         private IResult CheckIfCarIdExist(int carId)
