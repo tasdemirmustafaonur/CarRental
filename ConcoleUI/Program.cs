@@ -43,7 +43,7 @@ namespace ConsoleUI
         private static void CarAdd()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            Car car1 = new Car { BrandId = 2, ColorId = 3, DailyPrice = 1300, ModelYear = "2006", Description = "Araç hakkında bilgi bulunmamaktadır." };
+            Car car1 = new Car { BrandId = 2, ColorId = 3, DailyPrice = 1300, ModelYear = 2006, Description = "Araç hakkında bilgi bulunmamaktadır." };
             carManager.Add(car1);
 
             var result = carManager.GetAll();
@@ -86,7 +86,7 @@ namespace ConsoleUI
         private static void CarUpdate()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            Car car1 = new Car { CarId = 11, BrandId = 5,ModelYear = "2000"};
+            Car car1 = new Car { CarId = 11, BrandId = 5,ModelYear = 2000};
             carManager.Update(car1);
 
             var result = carManager.GetAll();
