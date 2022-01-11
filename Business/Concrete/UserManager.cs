@@ -40,9 +40,10 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(UserValidator))]
-        public IResult Delete(User user)
+        public IResult Delete(int userId)
         {
-            _userDal.Delete(user);
+            var deletedUser = _userDal.Get(u => u.UserId == userId);
+            _userDal.Delete(deletedUser);
             return new SuccessResult(Messages.UserDeleted);
         }
 

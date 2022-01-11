@@ -56,9 +56,10 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(RentalValidator))]
-        public IResult Delete(Rental rental)
+        public IResult Delete(int rentalId)
         {
-            _rentalDal.Delete(rental);
+            var deletedRental = _rentalDal.Get(r => r.RentalId == rentalId);
+            _rentalDal.Delete(deletedRental);
             return new SuccessResult(Messages.RentalDeleted);
         }
 
