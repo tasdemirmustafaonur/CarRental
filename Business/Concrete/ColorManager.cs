@@ -29,8 +29,10 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(ColorValidator))]
-        public IResult Delete(Color color)
+        public IResult Delete(int colorId)
         {
+            var deletedColor = _colorDal.Get(c => c.ColorId == colorId);
+            _colorDal.Delete(deletedColor);
             return new SuccessResult(Messages.ColorDeleted);
         }
 
