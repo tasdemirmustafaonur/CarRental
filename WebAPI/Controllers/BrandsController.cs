@@ -57,9 +57,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(int brandId)
+        public IActionResult Delete([FromForm] int id)
         {
-            var result = _brandService.Delete(brandId);
+            var result = _brandService.Delete(id);
             if (result.Success)
             {
                 return Ok(result);
