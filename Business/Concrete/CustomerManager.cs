@@ -48,9 +48,10 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CustomerValidator))]
-        public IResult Delete(Customer customer)
+        public IResult Delete(int customerId)
         {
-            _customerDal.Delete(customer);
+            var deletedCustomer = _customerDal.Get(c => c.CustomerId == customerId);
+            _customerDal.Delete(deletedCustomer);
             return new SuccessResult(Messages.CustomerDeleted);
         }
 
