@@ -28,8 +28,8 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BrandAdded);
         }
 
-        [ValidationAspect(typeof(BrandValidator))]
-        public IResult Delete(Brand brand)
+        
+        public IResult Delete(int brandId)
         {
             return new SuccessResult(Messages.BrandDeleted);
         }
