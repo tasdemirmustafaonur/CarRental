@@ -7,6 +7,7 @@ using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -35,13 +36,22 @@ namespace Business.Concrete
         [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User user)
         {
+            IResult rulesResult = BusinessRules.Run(CheckIfEmailExist(user.Email));
+            if (rulesResult!=null)
+            {
+                return rulesResult;
+            }
             _userDal.Add(user);
             return new SuccessResult(Messages.UserAdded);
         }
 
-        [ValidationAspect(typeof(UserValidator))]
         public IResult Delete(int userId)
         {
+            IResult rulesResult = BusinessRules.Run(CheckIfUserIdExist(userId));
+            if (rulesResult!=null)
+            {
+                return rulesResult;
+            }
             var deletedUser = _userDal.Get(u => u.UserId == userId);
             _userDal.Delete(deletedUser);
             return new SuccessResult(Messages.UserDeleted);
@@ -50,8 +60,33 @@ namespace Business.Concrete
         [ValidationAspect(typeof(UserValidator))]
         public IResult Update(User user)
         {
+            IResult rulesResult = BusinessRules.Run(CheckIfUserIdExist(user.UserId), CheckIfEmailExist(user.Email));
+            if (rulesResult!=null)
+            {
+                return rulesResult;
+            }
             _userDal.Update(user);
             return new SuccessResult(Messages.UserUpdated);
+        }
+
+        private IResult CheckIfUserIdExist(int userId)
+        {
+            var result = _userDal.GetAll(u => u.UserId == userId).Any();
+            if (!result)
+            {
+                return new ErrorResult(Messages.UserNotExist);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfEmailExist(string userEmail)
+        {
+            var result = _userDal.GetAll(u => u.Email == userEmail).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.UserEmailExist);
+            }
+            return new SuccessResult();
         }
     }
 }
