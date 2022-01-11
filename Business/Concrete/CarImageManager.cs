@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Helpers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -46,13 +48,46 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Add(CarImage carImage, IFormFile file)
         {
-            throw new NotImplementedException();
+            IResult rulesResult = BusinessRules.Run(CheckIfCarImageLimit(carImage.CarId));
+            if (rulesResult != null)
+            {
+                return rulesResult;
+            }
+
+            var imageResult = FileHelper.Upload(file);
+            if (!imageResult.Success)
+            {
+                return new ErrorResult(imageResult.Message);
+            }
+            carImage.ImagePath = imageResult.Message;
+            carImage.Date = DateTime.Now;
+            _carImageDal.Add(carImage);
+            return new SuccessResult(Messages.CarImageAdded);
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Update(CarImage carImage, IFormFile file)
         {
-            throw new NotImplementedException();
+            IResult rulesResult = BusinessRules.Run(CheckIfCarImageLimit(carImage.CarId));
+            if (rulesResult != null)
+            {
+                return rulesResult;
+            }
+
+            var image = _carImageDal.Get(c => c.CarImageId == carImage.CarImageId);
+            if (image == null)
+            {
+                return new ErrorResult(Messages.ImageNotFound);
+            }
+            var result = FileHelper.Update(file, image.ImagePath);
+            if (!result.Success)
+            {
+                return new ErrorResult(Messages.ErrorUpdatingImage);
+            }
+            carImage.ImagePath = result.Message;
+            carImage.Date = DateTime.Now;
+            _carImageDal.Update(carImage);
+            return new SuccessResult(Messages.CarImageUpdated);
         }
 
         public IResult Delete(int imageId)
@@ -69,6 +104,16 @@ namespace Business.Concrete
             }
             _carImageDal.Delete(image);
             return new SuccessResult(Messages.CarImageDeleted);
+        }
+
+        private IResult CheckIfCarImageLimit(int carId)
+        {
+            int result = _carImageDal.GetAll(c => c.CarId == carId).Count;
+            if (result >= 5)
+            {
+                return new ErrorResult(Messages.CarImageLimitExceeded);
+            }
+            return new SuccessResult();
         }
 
         private IDataResult<List<CarImage>> CheckIfCarImage(int carId)
