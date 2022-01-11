@@ -7,6 +7,7 @@ using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -58,6 +59,11 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Delete(int rentalId)
         {
+            IResult rulesResult = BusinessRules.Run(CheckIfRentalIdExist(rentalId));
+            if (rulesResult!=null)
+            {
+                return rulesResult;
+            }
             var deletedRental = _rentalDal.Get(r => r.RentalId == rentalId);
             _rentalDal.Delete(deletedRental);
             return new SuccessResult(Messages.RentalDeleted);
@@ -66,18 +72,29 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Update(Rental rental)
         {
+            IResult rulesResult = BusinessRules.Run(CheckIfRentalIdExist(rental.RentalId));
+            if (rulesResult!=null)
+            {
+                return rulesResult;
+            }
             _rentalDal.Update(rental);
             return new SuccessResult(Messages.RentalUpdated);
         }
 
         private bool IsCarAvailable(Rental rental)
         {
-            var carRentalHistory = _rentalDal.GetAll(r => r.CarId == rental.CarId);
-            if (carRentalHistory.Any(c => c.ReturnDate == null))
+            return !(_rentalDal.GetAll(r => r.CarId == rental.CarId && r.ReturnDate == null).Any());
+        }
+
+        private IResult CheckIfRentalIdExist(int rentalId)
+        {
+            var result = _rentalDal.GetAll(r => r.RentalId == rentalId).Any();
+            if (!result)
             {
-                return false;
+                return new ErrorResult(Messages.RentalNotExist);
             }
-            return true;
+
+            return new SuccessResult();
         }
     }
 }
