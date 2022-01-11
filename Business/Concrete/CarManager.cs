@@ -59,9 +59,10 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CarValidator))]
-        public IResult Delete(Car car)
+        public IResult Delete(int carId)
         {
-            _carDal.Delete(car);
+            var deletedCar = _carDal.Get(c => c.CarId == carId);
+            _carDal.Delete(deletedCar);
             return new SuccessResult();
         }
 
