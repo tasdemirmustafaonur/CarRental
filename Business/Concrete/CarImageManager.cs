@@ -32,8 +32,8 @@ namespace Business.Concrete
         {
             var checkIfCarImage = CheckIfCarHasImage(carId);
             var images = checkIfCarImage.Success
-                ? checkIfCarImage.Data
-                : _carImageDal.GetAll(c => c.CarId == carId);
+                ? _carImageDal.GetAll(c => c.CarId == carId)
+                : checkIfCarImage.Data;
             return new SuccessDataResult<List<CarImage>>(images, checkIfCarImage.Message);
         }
 
@@ -127,7 +127,7 @@ namespace Business.Concrete
                         Date = DateTime.Now
                     }
                 };
-                return new SuccessDataResult<List<CarImage>>(imageList, Messages.GetDefaultImage);
+                return new ErrorDataResult<List<CarImage>>(imageList, Messages.GetDefaultImage);
             }
             return new SuccessDataResult<List<CarImage>>(new List<CarImage>(),Messages.CarImagesListed);
         }
