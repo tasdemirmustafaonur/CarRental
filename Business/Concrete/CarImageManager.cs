@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Helpers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -42,11 +43,13 @@ namespace Business.Concrete
                 Messages.CarImageListed);
         }
 
+        [ValidationAspect(typeof(CarImageValidator))]
         public IResult Add(CarImage carImage, IFormFile file)
         {
             throw new NotImplementedException();
         }
 
+        [ValidationAspect(typeof(CarImageValidator))]
         public IResult Update(CarImage carImage, IFormFile file)
         {
             throw new NotImplementedException();
