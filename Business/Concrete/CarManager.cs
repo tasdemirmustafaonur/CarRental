@@ -8,6 +8,7 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -40,27 +41,32 @@ namespace Business.Concrete
 
         public IDataResult<Car> GetById(int carId)
         {
-            return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == carId));
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == carId),Messages.CarListed);
         }
 
         public IDataResult<List<Car>> GetCarsByBrandId(int id)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c=>c.BrandId==id));
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c=>c.BrandId==id),Messages.CarsListed);
         }
 
         public IDataResult<List<Car>> GetCarsByColorId(int id)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id));
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id),Messages.CarsListed);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(),Messages.CarsListed);
         }
 
-        [ValidationAspect(typeof(CarValidator))]
+        
         public IResult Delete(int carId)
         {
+            IResult rulesResult = BusinessRules.Run(CheckIfCarIdExist(carId));
+            if (rulesResult!=null)
+            {
+                return rulesResult;
+            }
             var deletedCar = _carDal.Get(c => c.CarId == carId);
             _carDal.Delete(deletedCar);
             return new SuccessResult();
@@ -69,7 +75,22 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
+            IResult rulesResult = BusinessRules.Run(CheckIfCarIdExist(car.CarId));
+            if (rulesResult!=null)
+            {
+                return rulesResult;
+            }
             _carDal.Update(car);
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfCarIdExist(int carId)
+        {
+            var result = _carDal.GetAll(c => c.CarId == carId).Any();
+            if (!result)
+            {
+                return new ErrorResult(Messages.CarNotExist);
+            }
             return new SuccessResult();
         }
     }
