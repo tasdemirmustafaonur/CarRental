@@ -41,7 +41,7 @@ namespace Business.Concrete
                 return rulesResult;
             }
 
-            var deletedBrand = _brandDal.Get(b => b.BrandId == brandId);
+            var deletedBrand = _brandDal.Get(b => b.Id == brandId);
             _brandDal.Delete(deletedBrand);
             return new SuccessResult(Messages.BrandDeleted);
         }
@@ -53,14 +53,14 @@ namespace Business.Concrete
 
         public IDataResult<Brand> GetBrandById(int id)
         {
-            return new SuccessDataResult<Brand>(_brandDal.Get(b => b.BrandId == id), Messages.BrandListed);
+            return new SuccessDataResult<Brand>(_brandDal.Get(b => b.Id == id), Messages.BrandListed);
         }
 
         [ValidationAspect(typeof(BrandValidator))]
         public IResult Update(Brand brand)
         {
             var rulesResult = BusinessRules.Run(CheckIfBrandNameExist(brand.BrandName),
-                CheckIfBrandIdExist(brand.BrandId));
+                CheckIfBrandIdExist(brand.Id));
             if (rulesResult != null)
             {
                 return rulesResult;
@@ -72,7 +72,7 @@ namespace Business.Concrete
 
         private IResult CheckIfBrandIdExist(int brandId)
         {
-            var result = _brandDal.GetAll(b => b.BrandId == brandId).Any();
+            var result = _brandDal.GetAll(b => b.Id == brandId).Any();
             if (!result)
             {
                 return new ErrorResult(Messages.BrandNotExist);

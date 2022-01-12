@@ -29,7 +29,7 @@ namespace Business.Concrete
 
         public IDataResult<Rental> GetRentalById(int rentalId)
         {
-            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.RentalId == rentalId), Messages.RentalListed);
+            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == rentalId), Messages.RentalListed);
         }
 
         public IDataResult<List<Rental>> GetCanBeRented()
@@ -62,7 +62,7 @@ namespace Business.Concrete
             {
                 return rulesResult;
             }
-            var deletedRental = _rentalDal.Get(r => r.RentalId == rentalId);
+            var deletedRental = _rentalDal.Get(r => r.Id == rentalId);
             _rentalDal.Delete(deletedRental);
             return new SuccessResult(Messages.RentalDeleted);
         }
@@ -70,7 +70,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Update(Rental rental)
         {
-            IResult rulesResult = BusinessRules.Run(CheckIfRentalIdExist(rental.RentalId));
+            IResult rulesResult = BusinessRules.Run(CheckIfRentalIdExist(rental.Id));
             if (rulesResult!=null)
             {
                 return rulesResult;
@@ -86,7 +86,7 @@ namespace Business.Concrete
 
         private IResult CheckIfRentalIdExist(int rentalId)
         {
-            var result = _rentalDal.GetAll(r => r.RentalId == rentalId).Any();
+            var result = _rentalDal.GetAll(r => r.Id == rentalId).Any();
             if (!result)
             {
                 return new ErrorResult(Messages.RentalNotExist);

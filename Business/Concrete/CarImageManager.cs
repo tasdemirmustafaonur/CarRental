@@ -39,7 +39,7 @@ namespace Business.Concrete
 
         public IDataResult<CarImage> GetById(int imageId)
         {
-            return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.CarImageId == imageId),
+            return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.Id == imageId),
                 Messages.CarImageListed);
         }
 
@@ -66,13 +66,13 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Update(CarImage carImage, IFormFile file)
         {
-            IResult rulesResult = BusinessRules.Run(CheckIfCarImageIdExist(carImage.CarImageId),CheckIfCarImageLimitExceeded(carImage.CarId));
+            IResult rulesResult = BusinessRules.Run(CheckIfCarImageIdExist(carImage.Id),CheckIfCarImageLimitExceeded(carImage.CarId));
             if (rulesResult != null)
             {
                 return rulesResult;
             }
 
-            var updatedImage = _carImageDal.Get(c => c.CarImageId == carImage.CarImageId);
+            var updatedImage = _carImageDal.Get(c => c.Id == carImage.Id);
             var result = FileHelper.Update(file, updatedImage.ImagePath);
             if (!result.Success)
             {
@@ -92,7 +92,7 @@ namespace Business.Concrete
                 return rulesResult;
             }
 
-            var deletedImage = _carImageDal.Get(c => c.CarImageId == imageId);
+            var deletedImage = _carImageDal.Get(c => c.Id == imageId);
             var result = FileHelper.Delete(deletedImage.ImagePath);
             if (!result.Success)
             {
@@ -134,7 +134,7 @@ namespace Business.Concrete
 
         private IResult CheckIfCarImageIdExist(int imageId)
         {
-            var result = _carImageDal.GetAll(c => c.CarImageId == imageId).Any();
+            var result = _carImageDal.GetAll(c => c.Id == imageId).Any();
             if (!result)
             {
                 return new ErrorResult(Messages.CarImageIdNotExist);

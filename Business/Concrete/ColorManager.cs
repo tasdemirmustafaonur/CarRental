@@ -40,7 +40,7 @@ namespace Business.Concrete
             {
                 return rulesResult;
             }
-            var deletedColor = _colorDal.Get(c => c.ColorId == colorId);
+            var deletedColor = _colorDal.Get(c => c.Id == colorId);
             _colorDal.Delete(deletedColor);
             return new SuccessResult(Messages.ColorDeleted);
         }
@@ -52,13 +52,13 @@ namespace Business.Concrete
 
         public IDataResult<Color> GetColorById(int id)
         {
-            return new SuccessDataResult<Color>(_colorDal.Get(c => c.ColorId == id), Messages.ColorListed);
+            return new SuccessDataResult<Color>(_colorDal.Get(c => c.Id == id), Messages.ColorListed);
         }
 
         [ValidationAspect(typeof(ColorValidator))]
         public IResult Update(Color color)
         {
-            IResult rulesResult = BusinessRules.Run(CheckIfColorIdExist(color.ColorId), CheckIfColorNameExist(color.ColorName));
+            IResult rulesResult = BusinessRules.Run(CheckIfColorIdExist(color.Id), CheckIfColorNameExist(color.ColorName));
             if (rulesResult!=null)
             {
                 return rulesResult;
@@ -69,7 +69,7 @@ namespace Business.Concrete
 
         private IResult CheckIfColorIdExist(int colorId)
         {
-            var result = _colorDal.GetAll(c => c.ColorId == colorId).Any();
+            var result = _colorDal.GetAll(c => c.Id == colorId).Any();
             if (!result)
             {
                 return new ErrorResult(Messages.ColorNotExist);

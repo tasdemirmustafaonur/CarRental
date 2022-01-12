@@ -28,7 +28,7 @@ namespace Business.Concrete
 
         public IDataResult<Customer> GetCustomerById(int customerId)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.CustomerId == customerId),
+            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == customerId),
                 Messages.CustomerListed);
         }
 
@@ -57,7 +57,7 @@ namespace Business.Concrete
             {
                 return rulesResult;
             }
-            var deletedCustomer = _customerDal.Get(c => c.CustomerId == customerId);
+            var deletedCustomer = _customerDal.Get(c => c.Id == customerId);
             _customerDal.Delete(deletedCustomer);
             return new SuccessResult(Messages.CustomerDeleted);
         }
@@ -65,7 +65,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CustomerValidator))]
         public IResult Update(Customer customer)
         {
-            IResult rulesResult = BusinessRules.Run(CheckIfCustomerIdExist(customer.CustomerId));
+            IResult rulesResult = BusinessRules.Run(CheckIfCustomerIdExist(customer.Id));
             if (rulesResult!=null)
             {
                 return rulesResult;
@@ -76,7 +76,7 @@ namespace Business.Concrete
 
         private IResult CheckIfCustomerIdExist(int customerId)
         {
-            var result = _customerDal.GetAll(c => c.CustomerId == customerId).Any();
+            var result = _customerDal.GetAll(c => c.Id == customerId).Any();
             if (!result)
             {
                 return new ErrorResult(Messages.CustomerNotExist);

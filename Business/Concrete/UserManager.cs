@@ -28,7 +28,7 @@ namespace Business.Concrete
 
         public IDataResult<User> GetUserById(int userId)
         {
-            return new SuccessDataResult<User>(_userDal.Get(u => u.UserId == userId), Messages.UserListed);
+            return new SuccessDataResult<User>(_userDal.Get(u => u.Id == userId), Messages.UserListed);
         }
 
         [ValidationAspect(typeof(UserValidator))]
@@ -50,7 +50,7 @@ namespace Business.Concrete
             {
                 return rulesResult;
             }
-            var deletedUser = _userDal.Get(u => u.UserId == userId);
+            var deletedUser = _userDal.Get(u => u.Id == userId);
             _userDal.Delete(deletedUser);
             return new SuccessResult(Messages.UserDeleted);
         }
@@ -58,7 +58,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(UserValidator))]
         public IResult Update(User user)
         {
-            IResult rulesResult = BusinessRules.Run(CheckIfUserIdExist(user.UserId), CheckIfEmailExist(user.Email));
+            IResult rulesResult = BusinessRules.Run(CheckIfUserIdExist(user.Id), CheckIfEmailExist(user.Email));
             if (rulesResult!=null)
             {
                 return rulesResult;
@@ -69,7 +69,7 @@ namespace Business.Concrete
 
         private IResult CheckIfUserIdExist(int userId)
         {
-            var result = _userDal.GetAll(u => u.UserId == userId).Any();
+            var result = _userDal.GetAll(u => u.Id == userId).Any();
             if (!result)
             {
                 return new ErrorResult(Messages.UserNotExist);

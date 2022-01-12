@@ -36,7 +36,7 @@ namespace Business.Concrete
 
         public IDataResult<Car> GetById(int carId)
         {
-            return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == carId),Messages.CarListed);
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == carId),Messages.CarListed);
         }
 
         public IDataResult<List<Car>> GetCarsByBrandId(int id)
@@ -62,7 +62,7 @@ namespace Business.Concrete
             {
                 return rulesResult;
             }
-            var deletedCar = _carDal.Get(c => c.CarId == carId);
+            var deletedCar = _carDal.Get(c => c.Id == carId);
             _carDal.Delete(deletedCar);
             return new SuccessResult(Messages.CarDeleted);
         }
@@ -70,7 +70,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
-            IResult rulesResult = BusinessRules.Run(CheckIfCarIdExist(car.CarId));
+            IResult rulesResult = BusinessRules.Run(CheckIfCarIdExist(car.Id));
             if (rulesResult!=null)
             {
                 return rulesResult;
@@ -81,7 +81,7 @@ namespace Business.Concrete
 
         private IResult CheckIfCarIdExist(int carId)
         {
-            var result = _carDal.GetAll(c => c.CarId == carId).Any();
+            var result = _carDal.GetAll(c => c.Id == carId).Any();
             if (!result)
             {
                 return new ErrorResult(Messages.CarNotExist);

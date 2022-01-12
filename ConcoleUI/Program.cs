@@ -65,15 +65,15 @@ namespace ConsoleUI
         private static void CarDelete()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            Car car1 = new Car {CarId = 1002};
-            carManager.Delete(car1);
+            Car car1 = new Car {Id = 1002};
+            carManager.Delete(car1.Id);
 
             var result = carManager.GetAll();
             if (result.Success==true)
             {
                 foreach (var car in result.Data)
                 {
-                    Console.WriteLine("{0}  /  {1}", car.CarId, car.DailyPrice);
+                    Console.WriteLine("{0}  /  {1}", car.Id, car.DailyPrice);
                 }
             }
             else
@@ -86,7 +86,7 @@ namespace ConsoleUI
         private static void CarUpdate()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            Car car1 = new Car { CarId = 11, BrandId = 5,ModelYear = 2000};
+            Car car1 = new Car { Id = 11, BrandId = 5,ModelYear = 2000};
             carManager.Update(car1);
 
             var result = carManager.GetAll();
@@ -94,7 +94,7 @@ namespace ConsoleUI
             {
                 foreach (var car in result.Data)
                 {
-                    Console.WriteLine("{0} / {1} / {2} / {3}", car.CarId, car.BrandId, car.ModelYear, car.DailyPrice);
+                    Console.WriteLine("{0} / {1} / {2} / {3}", car.Id, car.BrandId, car.ModelYear, car.DailyPrice);
                 }
             }
             else
