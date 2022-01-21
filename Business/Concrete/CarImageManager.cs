@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -23,11 +24,13 @@ namespace Business.Concrete
             _carImageDal = carImageDal;
         }
 
+        [SecuredOperation("admin,carimage.all,carimage.list")]
         public IDataResult<List<CarImage>> GetAll()
         {
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(), Messages.CarsImagesListed);
         }
 
+        [SecuredOperation("admin,carimage.all,carimage.list")]
         public IDataResult<List<CarImage>> GetCarImages(int carId)
         {
             var checkIfCarImage = CheckIfCarHasImage(carId);
@@ -37,12 +40,14 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(images, checkIfCarImage.Message);
         }
 
+        [SecuredOperation("admin,carimage.all,carimage.list")]
         public IDataResult<CarImage> GetById(int imageId)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.Id == imageId),
                 Messages.CarImageListed);
         }
 
+        [SecuredOperation("admin,carimage.all,carimage.add")]
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Add(CarImage carImage, IFormFile file)
         {
@@ -63,6 +68,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImageAdded);
         }
 
+        [SecuredOperation("admin,carimage.all,carimage.update")]
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Update(CarImage carImage, IFormFile file)
         {
@@ -84,6 +90,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImageUpdated);
         }
 
+        [SecuredOperation("admin,carimage.all,carimage.delete")]
         public IResult Delete(int imageId)
         {
             IResult rulesResult = BusinessRules.Run(CheckIfCarImageIdExist(imageId));

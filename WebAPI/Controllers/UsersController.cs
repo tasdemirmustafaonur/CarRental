@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Business.Abstract;
 using Core.Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace WebAPI.Controllers
@@ -16,6 +17,7 @@ namespace WebAPI.Controllers
             _userService = userService;
         }
 
+        [Authorize(Roles = "admin,user.all,user.list")]
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
@@ -28,6 +30,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [Authorize(Roles = "admin,user.all,user.list")]
         [HttpGet("getbyid")]
         public IActionResult GetById(int id)
         {
@@ -40,6 +43,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [Authorize(Roles = "admin,user.all,user.add")]
         [HttpPost("add")]
         public IActionResult Add(User user)
         {
@@ -52,6 +56,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [Authorize(Roles = "admin,user.all,user.delete")]
         [HttpPost("delete")]
         public IActionResult Delete([FromForm] int id)
         {
@@ -64,6 +69,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [Authorize(Roles = "admin,user.all,user.update")]
         [HttpPost("update")]
         public IActionResult Update(User user)
         {
