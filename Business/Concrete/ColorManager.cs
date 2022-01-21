@@ -4,6 +4,7 @@ using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -23,6 +24,7 @@ namespace Business.Concrete
 
         [SecuredOperation("admin,color.all,color.add")]
         [ValidationAspect(typeof(ColorValidator))]
+        [CacheRemoveAspect("IColorService.Get")]
         public IResult Add(Color color)
         {
             IResult rulesResult = BusinessRules.Run(CheckIfColorNameExist(color.ColorName));
@@ -36,6 +38,7 @@ namespace Business.Concrete
 
         [SecuredOperation("admin,color.all,color.delete")]
         [ValidationAspect(typeof(ColorValidator))]
+        [CacheRemoveAspect("IColorService.Get")]
         public IResult Delete(int colorId)
         {
             IResult rulesResult = BusinessRules.Run(CheckIfColorIdExist(colorId));
@@ -49,12 +52,14 @@ namespace Business.Concrete
         }
 
         [SecuredOperation("admin,color.all,color.list")]
+        [CacheAspect(10)]
         public IDataResult<List<Color>> GetAll()
         {
             return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.ColorsListed);
         }
 
         [SecuredOperation("admin,color.all,color.list")]
+        [CacheAspect(10)]
         public IDataResult<Color> GetColorById(int id)
         {
             return new SuccessDataResult<Color>(_colorDal.Get(c => c.Id == id), Messages.ColorListed);
@@ -62,6 +67,7 @@ namespace Business.Concrete
 
         [SecuredOperation("admin,color.all,color.update")]
         [ValidationAspect(typeof(ColorValidator))]
+        [CacheRemoveAspect("IColorService.Get")]
         public IResult Update(Color color)
         {
             IResult rulesResult = BusinessRules.Run(CheckIfColorIdExist(color.Id), CheckIfColorNameExist(color.ColorName));
