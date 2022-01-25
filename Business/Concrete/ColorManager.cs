@@ -27,7 +27,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IColorService.Get")]
         public IResult Add(Color color)
         {
-            IResult rulesResult = BusinessRules.Run(CheckIfColorNameExist(color.ColorName));
+            IResult rulesResult = BusinessRules.Run(CheckIfColorNameExist(color.Name));
             if (rulesResult!=null)
             {
                 return rulesResult;
@@ -70,7 +70,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IColorService.Get")]
         public IResult Update(Color color)
         {
-            IResult rulesResult = BusinessRules.Run(CheckIfColorIdExist(color.Id), CheckIfColorNameExist(color.ColorName));
+            IResult rulesResult = BusinessRules.Run(CheckIfColorIdExist(color.Id), CheckIfColorNameExist(color.Name));
             if (rulesResult!=null)
             {
                 return rulesResult;
@@ -91,7 +91,7 @@ namespace Business.Concrete
 
         private IResult CheckIfColorNameExist(string colorName)
         {
-            var result = _colorDal.GetAll(c => c.ColorName == colorName).Any();
+            var result = _colorDal.GetAll(c => c.Name == colorName).Any();
             if (result)
             {
                 return new ErrorResult(Messages.ColorNameExist);

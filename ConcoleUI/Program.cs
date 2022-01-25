@@ -114,7 +114,7 @@ namespace ConsoleUI
             {
                 foreach (var brand in result.Data)
                 {
-                    Console.WriteLine(brand.BrandName);
+                    Console.WriteLine(brand.Name);
                 }
             }
             

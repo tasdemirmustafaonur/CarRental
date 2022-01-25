@@ -65,7 +65,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id),Messages.CarsListed);
         }
 
-        [SecuredOperation("admin,car.all,car.list")]
+        //[SecuredOperation("admin,car.all,car.list")]
         [CacheAspect(10)]
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()

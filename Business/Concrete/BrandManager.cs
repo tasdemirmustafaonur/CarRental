@@ -27,7 +27,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IBrandService.Get")]
         public IResult Add(Brand brand)
         {
-            var rulesResult = BusinessRules.Run(CheckIfBrandNameExist(brand.BrandName));
+            var rulesResult = BusinessRules.Run(CheckIfBrandNameExist(brand.Name));
             if (rulesResult!=null)
             {
                 return rulesResult;
@@ -51,7 +51,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BrandDeleted);
         }
 
-        [SecuredOperation("admin,brand.all,brand.list")]
+        //[SecuredOperation("admin,brand.all,brand.list")]
         [CacheAspect(10)]
         public IDataResult<List<Brand>> GetAll()
         {
@@ -70,7 +70,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IBrandService.Get")]
         public IResult Update(Brand brand)
         {
-            var rulesResult = BusinessRules.Run(CheckIfBrandNameExist(brand.BrandName),
+            var rulesResult = BusinessRules.Run(CheckIfBrandNameExist(brand.Name),
                 CheckIfBrandIdExist(brand.Id));
             if (rulesResult != null)
             {
@@ -93,7 +93,7 @@ namespace Business.Concrete
 
         private IResult CheckIfBrandNameExist(string brandName)
         {
-            var result = _brandDal.GetAll(b => Equals(b.BrandName, brandName)).Any();
+            var result = _brandDal.GetAll(b => Equals(b.Name, brandName)).Any();
             if (result)
             {
                 return new ErrorResult(Messages.BrandExist);
