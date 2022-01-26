@@ -49,7 +49,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == carId),Messages.CarListed);
         }
 
-        [SecuredOperation("admin,car.all,car.list")]
+        //[SecuredOperation("admin,car.all,car.list")]
         [CacheAspect(10)]
 
         public IDataResult<List<Car>> GetCarsByBrandId(int id)
@@ -57,7 +57,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c=>c.BrandId==id),Messages.CarsListed);
         }
 
-        [SecuredOperation("admin,car.all,car.list")]
+        //[SecuredOperation("admin,car.all,car.list")]
         [CacheAspect(10)]
 
         public IDataResult<List<Car>> GetCarsByColorId(int id)

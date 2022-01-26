@@ -51,7 +51,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ColorDeleted);
         }
 
-        [SecuredOperation("admin,color.all,color.list")]
+        //[SecuredOperation("admin,color.all,color.list")]
         [CacheAspect(10)]
         public IDataResult<List<Color>> GetAll()
         {

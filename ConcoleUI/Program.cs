@@ -129,7 +129,7 @@ namespace ConsoleUI
             {
                 foreach (var car in result.Data)
                 {
-                    Console.WriteLine("{0}  /  {1} / {2} / {3} / {4}", car.CarId, car.BrandName, car.ModelName, car.ColorName, car.DailyPrice);
+                    Console.WriteLine("{0}  /  {1} / {2} / {3} / {4}", car.Id, car.BrandName, car.ModelName, car.ColorName, car.DailyPrice);
                 }
             }
             else

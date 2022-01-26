@@ -46,7 +46,7 @@ namespace Business.Concrete
                 Messages.RentalsListed);
         }
 
-        [SecuredOperation("admin,rental.all,rental.list")]
+        //[SecuredOperation("admin,rental.all,rental.list")]
         [CacheAspect(10)]
         public IDataResult<List<RentalDetailDto>> GetRentalsDetails()
         {

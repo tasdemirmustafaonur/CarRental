@@ -20,7 +20,7 @@ namespace DataAccess.Concrete.EntityFramework
                         on r.CustomerId equals cu.Id
                     select new RentalDetailDto
                     {
-                        RentalId = r.Id,
+                        Id = r.Id,
                         DailyPrice = c.DailyPrice,
                         RentDate = r.RentDate.Value,
                         ReturnDate = r.ReturnDate.Value
