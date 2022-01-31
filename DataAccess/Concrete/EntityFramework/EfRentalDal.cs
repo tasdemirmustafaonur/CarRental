@@ -24,6 +24,8 @@ namespace DataAccess.Concrete.EntityFramework
                         on cu.UserId equals u.Id
                     join b in context.Brands
                         on c.BrandId equals b.Id
+                    join p in context.Payments
+                        on r.PaymentId equals p.Id
                     select new RentalDetailDto
                     {
                         Id = r.Id,
@@ -35,6 +37,8 @@ namespace DataAccess.Concrete.EntityFramework
                         DailyPrice = c.DailyPrice,
                         RentDate = r.RentDate,
                         ReturnDate = r.ReturnDate,
+                        PaymentId = r.PaymentId,
+                        PaymentDate = p.PaymentDate,
                         DeliveryStatus = r.DeliveryStatus
                     };
                 return filter == null

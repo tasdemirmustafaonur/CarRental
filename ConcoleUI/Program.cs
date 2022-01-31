@@ -22,12 +22,12 @@ namespace ConsoleUI
         }
 
 
-        private static void RentalCarTest()
-        {
-            RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            var x = rentalManager.Add(new Rental {CarId = 4, CustomerId = 1, RentDate = DateTime.Now});
-            Console.WriteLine("{0} -----> {1}",x.Success,x.Message);
-        }
+        //private static void RentalCarTest()
+        //{
+        //    RentalManager rentalManager = new RentalManager(new EfRentalDal());
+        //    var x = rentalManager.Add(new Rental {CarId = 4, CustomerId = 1, RentDate = DateTime.Now});
+        //    Console.WriteLine("{0} -----> {1}",x.Success,x.Message);
+        //}
 
         private static void CustomerManagerAddTest()
         {

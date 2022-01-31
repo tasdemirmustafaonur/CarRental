@@ -52,6 +52,8 @@ namespace Business.Constants
         public static string ReservationBetweenSelectedDatesExist = "Secilen tarihler arasinda zaten bir rezervasyon mevcut";
         public static string CarCanBeRentedBetweenSelectedDates = "Araba, secilen tarihler arasinda kiralanabilir";
         public static string CarAlreadyRentedByTheReservationDate = "Araba, rezervasyon tarihine kadar kiralanmis";
+        public static string RentDateMustBeGreaterThanReturnDate = "Kiralama tarihi, dönüs tarihinden buyuk olmalidir";
+        public static string RentalSuccessful = "Kiralama basarili";
 
         public static string CarImagesListed = "Arabanın resimleri listelendi";
         public static string CarsImagesListed = "Tüm araba resimleri listelendi";
@@ -77,5 +79,13 @@ namespace Business.Constants
         public static string DeliveryStatusMustBeNull = "Teslim durumu null olmalidir";
         public static string DeliveryStatusMustBeFalse = "Teslim durumu false olmalidir";
         public static string DeliveryStatusCanNotBeNull = "Teslim durumu null olamaz";
+
+        public static string CreditCardNotValid = "Kredi karti bilgileri dogrulanamadi";
+        public static string PaymentSuccessful = "Odeme basariyla tamamlandi";
+        public static string InsufficientCardBalance = "Kart bakiyesi yetersiz";
+
+        public static string StringMustConsistOfNumbersOnly = "String, sadece sayilardan olusmalidir";
+        public static string LeastOneCustomerIdDoesNotMatch = "Ödemedeki müsteri id'si ile en az bir kiralamadaki müsterinin id'si uyusmuyor";
+        public static string TotalAmountNotMatch = "Kiralamalardaki toplam tutar ile ödenecek toplam tutar uyusmuyor";
     }
 }
