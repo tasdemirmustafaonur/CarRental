@@ -49,6 +49,9 @@ namespace Business.Constants
         public static string RentalListed = "Kiralama listelendi";
         public static string RentalCarNotAvailable = "Kiralanmak istenen arac daha once kiralanmis";
         public static string RentalNotExist = "Kiralama mevcut degil";
+        public static string ReservationBetweenSelectedDatesExist = "Secilen tarihler arasinda zaten bir rezervasyon mevcut";
+        public static string CarCanBeRentedBetweenSelectedDates = "Araba, secilen tarihler arasinda kiralanabilir";
+        public static string CarAlreadyRentedByTheReservationDate = "Araba, rezervasyon tarihine kadar kiralanmis";
 
         public static string CarImagesListed = "Arabanın resimleri listelendi";
         public static string CarsImagesListed = "Tüm araba resimleri listelendi";
@@ -70,5 +73,9 @@ namespace Business.Constants
         public static string SuccessfulLogin = "Giris basarili";
         public static string UserAlreadyExists = "Kullanici zaten sisteme kayitli";
         public static string AccessTokenCreated = "Token basariyla olusturuldu";
+
+        public static string DeliveryStatusMustBeNull = "Teslim durumu null olmalidir";
+        public static string DeliveryStatusMustBeFalse = "Teslim durumu false olmalidir";
+        public static string DeliveryStatusCanNotBeNull = "Teslim durumu null olamaz";
     }
 }
