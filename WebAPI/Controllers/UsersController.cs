@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Business.Abstract;
 using Core.Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Authorization;
 
 
@@ -17,11 +18,11 @@ namespace WebAPI.Controllers
             _userService = userService;
         }
 
-        [Authorize(Roles = "admin,user.all,user.list")]
+        //[Authorize(Roles = "admin,user.all,user.list")]
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var result = _userService.GetAll();
+            var result = _userService.GetAllDto();
             if (result.Success)
             {
                 return Ok(result);
@@ -30,11 +31,11 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [Authorize(Roles = "admin,user.all,user.list")]
+        //[Authorize(Roles = "admin,user.all,user.list")]
         [HttpGet("getbyid")]
         public IActionResult GetById(int id)
         {
-            var result = _userService.GetUserById(id);
+            var result = _userService.GetUserDtoById(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -43,20 +44,20 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [Authorize(Roles = "admin,user.all,user.add")]
-        [HttpPost("add")]
-        public IActionResult Add(User user)
-        {
-            var result = _userService.Add(user);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+        //[Authorize(Roles = "admin,user.all,user.add")]
+        //[HttpPost("add")]
+        //public IActionResult Add(User user)
+        //{
+        //    var result = _userService.Add(user);
+        //    if (result.Success)
+        //    {
+        //        return Ok(result);
+        //    }
 
-            return BadRequest(result);
-        }
+        //    return BadRequest(result);
+        //}
 
-        [Authorize(Roles = "admin,user.all,user.delete")]
+        //[Authorize(Roles = "admin,user.all,user.delete")]
         [HttpPost("delete")]
         public IActionResult Delete([FromForm] int id)
         {
@@ -69,11 +70,11 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [Authorize(Roles = "admin,user.all,user.update")]
+        //[Authorize(Roles = "admin,user.all,user.update")]
         [HttpPost("update")]
-        public IActionResult Update(User user)
+        public IActionResult Update(UserDto user)
         {
-            var result = _userService.Update(user);
+            var result = _userService.UpdateByDto(user);
             if (result.Success)
             {
                 return Ok(result);

@@ -34,6 +34,7 @@ namespace Business.Constants
         public static string UserListed = "Kullanici listelendi";
         public static string UserNotExist = "Kullanici mevcut degil";
         public static string UserEmailExist = "E-mail zaten kayitli";
+        public static string UserEmailNotAvailable = "Kullanici e-maili gecersiz";
 
         public static string CustomerAdded = "Müşteri eklendi";
         public static string CustomerDeleted = "Müşteri silindi";
@@ -76,6 +77,7 @@ namespace Business.Constants
         public static string SuccessfulLogin = "Giris basarili";
         public static string UserAlreadyExists = "Kullanici zaten sisteme kayitli";
         public static string AccessTokenCreated = "Token basariyla olusturuldu";
+        public static string PasswordChanged = "Sifre basariyla degistirildi";
 
         public static string DeliveryStatusMustBeNull = "Teslim durumu null olmalidir";
         public static string DeliveryStatusMustBeFalse = "Teslim durumu false olmalidir";

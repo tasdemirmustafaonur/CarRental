@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.Constants;
 using Entities.Concrete;
+using Entities.Models;
 using FluentValidation;
 
 namespace Business.ValidationRules.FluentValidation
 {
-    public class RentPaymentRequestValidator : AbstractValidator<RentPaymentRequest>
+    public class RentPaymentRequestValidator : AbstractValidator<RentPaymentRequestModel>
     {
         public RentPaymentRequestValidator()
         {
