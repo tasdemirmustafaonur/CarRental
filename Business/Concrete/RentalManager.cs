@@ -31,28 +31,28 @@ namespace Business.Concrete
             _carService = carService;
         }
 
-        [SecuredOperation("admin,rental.all,rental.list")]
+        //[SecuredOperation("admin,rental.all,rental.list")]
         [CacheAspect(10)]
         public IDataResult<List<Rental>> GetAll()
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalsListed);
         }
 
-        [SecuredOperation("admin,rental.all,rental.list")]
+        //[SecuredOperation("admin,rental.all,rental.list")]
         [CacheAspect(10)]
         public IDataResult<Rental> GetRentalById(int rentalId)
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == rentalId), Messages.RentalListed);
         }
 
-        [SecuredOperation("admin,rental.all,rental.list")]
+        //[SecuredOperation("admin,rental.all,rental.list")]
         [CacheAspect(10)]
         public IDataResult<List<RentalDetailDto>> GetRentalsByCustomerIdWithDetails(int customerId)
         {
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalsDetails(r => r.CustomerId == customerId), Messages.RentalsListed);
         }
 
-        [SecuredOperation("admin,rental.all,rental.list")]
+        //[SecuredOperation("admin,rental.all,rental.list")]
         public IDataResult<bool> CheckIfCanCarBeRentedNow(int carId)
         {
             var rulesResult = BusinessRules.Run(CheckIfCarAvailableNow(carId));
@@ -81,7 +81,7 @@ namespace Business.Concrete
         }
 
 
-        [SecuredOperation("admin,rental.all,rental.add")]
+        //[SecuredOperation("admin,rental.all,rental.add")]
         [ValidationAspect(typeof(RentalValidator))]
         [CacheRemoveAspect("IRentalService.Get")]
         public IResult Add(Rental rental)
@@ -113,7 +113,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalAdded);
         }
 
-        [SecuredOperation("admin,rental.all,rental.delete")]
+        //[SecuredOperation("admin,rental.all,rental.delete")]
         [ValidationAspect(typeof(RentalValidator))]
         [CacheRemoveAspect("IRentalService.Get")]
         public IResult Delete(int rentalId)
@@ -128,7 +128,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalDeleted);
         }
 
-        [SecuredOperation("admin,rental.all,rental.update")]
+        //[SecuredOperation("admin,rental.all,rental.update")]
         [ValidationAspect(typeof(RentalValidator))]
         [CacheRemoveAspect("IRentalService.Get")]
         public IResult Update(Rental rental)
@@ -158,7 +158,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalUpdated);
         }
 
-        [SecuredOperation("admin,rental.all,rental.rent,customer")]
+        //[SecuredOperation("admin,rental.all,rental.rent,customer")]
         [ValidationAspect(typeof(RentPaymentRequestValidator))]
         [TransactionScopeAspect]
         public IDataResult<int> Rent(RentPaymentRequest rentPaymentRequest)

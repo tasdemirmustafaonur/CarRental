@@ -30,7 +30,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.CustomersListed);
         }
 
-        [SecuredOperation("admin,customer.all,customer.list")]
+        //[SecuredOperation("admin,customer.all,customer.list")]
         [CacheAspect(10)]
         public IDataResult<Customer> GetCustomerById(int customerId)
         {
@@ -38,7 +38,7 @@ namespace Business.Concrete
                 Messages.CustomerListed);
         }
 
-        [SecuredOperation("admin,customer.all,customer.list")]
+        //[SecuredOperation("admin,customer.all,customer.list")]
         [CacheAspect(10)]
         public IDataResult<List<CustomerDetailDto>> GetCustomersDetails()
         {
@@ -46,7 +46,7 @@ namespace Business.Concrete
                 Messages.CustomersListed);
         }
 
-        [SecuredOperation("admin,customer.all,customer.add")]
+        //[SecuredOperation("admin,customer.all,customer.add")]
         [ValidationAspect(typeof(CustomerValidator))]
         [CacheRemoveAspect("ICustomerService.Get")]
         public IResult Add(Customer customer)
@@ -60,7 +60,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CustomerAdded);
         }
 
-        [SecuredOperation("admin,customer.all,customer.delete")]
+        //[SecuredOperation("admin,customer.all,customer.delete")]
         [CacheRemoveAspect("ICustomerService.Get")]
         public IResult Delete(int customerId)
         {
@@ -74,7 +74,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CustomerDeleted);
         }
 
-        [SecuredOperation("admin,customer.all,customer.update")]
+        //[SecuredOperation("admin,customer.all,customer.update")]
         [ValidationAspect(typeof(CustomerValidator))]
         [CacheRemoveAspect("ICustomerService.Get")]
         public IResult Update(Customer customer)

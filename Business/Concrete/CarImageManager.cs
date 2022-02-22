@@ -25,7 +25,7 @@ namespace Business.Concrete
             _carImageDal = carImageDal;
         }
 
-        [SecuredOperation("admin,carimage.all,carimage.list")]
+        //[SecuredOperation("admin,carimage.all,carimage.list")]
         [CacheAspect(10)]
 
         public IDataResult<List<CarImage>> GetAll()
@@ -33,7 +33,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(), Messages.CarsImagesListed);
         }
 
-        [SecuredOperation("admin,carimage.all,carimage.list")]
+        //[SecuredOperation("admin,carimage.all,carimage.list")]
         [CacheAspect(10)]
 
         public IDataResult<List<CarImage>> GetCarImages(int carId)
@@ -45,7 +45,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(images, checkIfCarImage.Message);
         }
 
-        [SecuredOperation("admin,carimage.all,carimage.list")]
+        //[SecuredOperation("admin,carimage.all,carimage.list")]
         [CacheAspect(10)]
 
         public IDataResult<CarImage> GetById(int imageId)
@@ -54,7 +54,7 @@ namespace Business.Concrete
                 Messages.CarImageListed);
         }
 
-        [SecuredOperation("admin,carimage.all,carimage.add")]
+        //[SecuredOperation("admin,carimage.all,carimage.add")]
         [ValidationAspect(typeof(CarImageValidator))]
         [CacheRemoveAspect("ICarImageService.Get")]
         public IResult Add(CarImage carImage, IFormFile file)
@@ -76,7 +76,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImageAdded);
         }
 
-        [SecuredOperation("admin,carimage.all,carimage.update")]
+        //[SecuredOperation("admin,carimage.all,carimage.update")]
         [ValidationAspect(typeof(CarImageValidator))]
         [CacheRemoveAspect("ICarImageService.Get")]
         public IResult Update(CarImage carImage, IFormFile file)
@@ -99,7 +99,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImageUpdated);
         }
 
-        [SecuredOperation("admin,carimage.all,carimage.delete")]
+        //[SecuredOperation("admin,carimage.all,carimage.delete")]
         [CacheRemoveAspect("ICarImageService.Get")]
         public IResult Delete(int imageId)
         {
