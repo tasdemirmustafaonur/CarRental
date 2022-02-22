@@ -41,69 +41,69 @@ namespace ConsoleUI
             userManager.Add(new User {FirstName = "Enes", LastName = "Koç", Email = "enes@"});
         }
 
-        private static void CarAdd()
-        {
-            CarManager carManager = new CarManager(new EfCarDal());
-            Car car1 = new Car { BrandId = 2, ColorId = 3, DailyPrice = 1300, ModelYear = 2006, Description = "Araç hakkında bilgi bulunmamaktadır." };
-            carManager.Add(car1);
+        //private static void CarAdd()
+        //{
+        //    CarManager carManager = new CarManager(new EfCarDal());
+        //    Car car1 = new Car { BrandId = 2, ColorId = 3, DailyPrice = 1300, ModelYear = 2006, Description = "Araç hakkında bilgi bulunmamaktadır." };
+        //    carManager.Add(car1);
 
-            var result = carManager.GetAll();
-            if (result.Success==true)
-            {
-                foreach (var car in result.Data)
-                {
-                    Console.WriteLine(car.Description);
-                }
-            }
-            else
-            {
-                Console.WriteLine(result.Message);
-            }
+        //    var result = carManager.GetAll();
+        //    if (result.Success==true)
+        //    {
+        //        foreach (var car in result.Data)
+        //        {
+        //            Console.WriteLine(car.Description);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine(result.Message);
+        //    }
 
             
-        }
+        //}
 
-        private static void CarDelete()
-        {
-            CarManager carManager = new CarManager(new EfCarDal());
-            Car car1 = new Car {Id = 1002};
-            carManager.Delete(car1.Id);
+        //private static void CarDelete()
+        //{
+        //    CarManager carManager = new CarManager(new EfCarDal());
+        //    Car car1 = new Car {Id = 1002};
+        //    carManager.Delete(car1.Id);
 
-            var result = carManager.GetAll();
-            if (result.Success==true)
-            {
-                foreach (var car in result.Data)
-                {
-                    Console.WriteLine("{0}  /  {1}", car.Id, car.DailyPrice);
-                }
-            }
-            else
-            {
-                Console.WriteLine(result.Message);
-            }
+        //    var result = carManager.GetAll();
+        //    if (result.Success==true)
+        //    {
+        //        foreach (var car in result.Data)
+        //        {
+        //            Console.WriteLine("{0}  /  {1}", car.Id, car.DailyPrice);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine(result.Message);
+        //    }
             
-        }
+        //}
 
-        private static void CarUpdate()
-        {
-            CarManager carManager = new CarManager(new EfCarDal());
-            Car car1 = new Car { Id = 11, BrandId = 5,ModelYear = 2000};
-            carManager.Update(car1);
+        //private static void CarUpdate()
+        //{
+        //    CarManager carManager = new CarManager(new EfCarDal());
+        //    Car car1 = new Car { Id = 11, BrandId = 5,ModelYear = 2000};
+        //    carManager.Update(car1);
 
-            var result = carManager.GetAll();
-            if (result.Success==true)
-            {
-                foreach (var car in result.Data)
-                {
-                    Console.WriteLine("{0} / {1} / {2} / {3}", car.Id, car.BrandId, car.ModelYear, car.DailyPrice);
-                }
-            }
-            else
-            {
-                Console.WriteLine(result.Message);
-            }
+        //    var result = carManager.GetAll();
+        //    if (result.Success==true)
+        //    {
+        //        foreach (var car in result.Data)
+        //        {
+        //            Console.WriteLine("{0} / {1} / {2} / {3}", car.Id, car.BrandId, car.ModelYear, car.DailyPrice);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine(result.Message);
+        //    }
             
-        }
+        //}
 
         private static void BrandTest()
         {

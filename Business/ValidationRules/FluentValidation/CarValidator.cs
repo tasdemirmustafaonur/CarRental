@@ -23,8 +23,18 @@ namespace Business.ValidationRules.FluentValidation
 
             RuleFor(c => c.ModelYear).NotEmpty();
             RuleFor(c => c.ModelYear).NotNull();
-            
-            
+
+            RuleFor(c => c.ModelName).NotEmpty();
+            RuleFor(c => c.ModelName).NotNull();
+            RuleFor(c => c.ModelName).MinimumLength(1);
+            RuleFor(c => c.ModelName).MaximumLength(50);
+
+            RuleFor(c => c.Description).NotEmpty();
+            RuleFor(c => c.Description).NotNull();
+            RuleFor(c => c.Description).MinimumLength(2);
+            RuleFor(c => c.Description).MaximumLength(50);
+
+
             //RuleFor(c => c.DailyPrice).GreaterThanOrEqualTo(10).When(c => c.BrandId == 1);
             //RuleFor(c => c.ModelName).Must(StartWithA).WithMessage("Model isimleri A harfi ile başlamalı.");
         }

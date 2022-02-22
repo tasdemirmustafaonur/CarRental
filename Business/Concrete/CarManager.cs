@@ -16,21 +16,34 @@ namespace Business.Concrete
 {
     public class CarManager:ICarService
     {
-        ICarDal _carDal;
+        private readonly ICarDal _carDal;
+        private readonly ICarImageService _carImageService;
 
-        public CarManager(ICarDal carDal)
+        public CarManager(ICarDal carDal, ICarImageService carImageService)
         {
             _carDal = carDal;
+            _carImageService = carImageService;
         }
 
         //[SecuredOperation("admin,car.all,car.add")]
         [ValidationAspect(typeof(CarValidator))]
         [CacheRemoveAspect("ICarService.Get")]
-        public IResult Add(Car car)
+        public IDataResult<int> Add(Car car)
         {
            
             _carDal.Add(car);
-            return new SuccessResult(Messages.CarAdded);
+            var result = _carDal.Get(c =>
+                c.ModelName == car.ModelName &&
+                c.Description == car.Description &&
+                c.BrandId == car.BrandId &&
+                c.ColorId == car.ColorId &&
+                c.DailyPrice == car.DailyPrice &&
+                c.ModelYear == car.ModelYear);
+            if (result != null)
+            {
+                return new SuccessDataResult<int>(result.Id, Messages.CarAdded);
+            }
+            return new ErrorDataResult<int>(-1, "Araç eklenirken bir sorun oldu");
         }
 
         //[SecuredOperation("admin,car.all,car.list")]
@@ -103,15 +116,16 @@ namespace Business.Concrete
 
         //[SecuredOperation("admin,car.all,car.delete")]
         [CacheRemoveAspect("ICarService.Get")]
-        public IResult Delete(int carId)
+        public IResult Delete(Car car)
         {
-            IResult rulesResult = BusinessRules.Run(CheckIfCarIdExist(carId));
+            IResult rulesResult = BusinessRules.Run(CheckIfCarIdExist(car.Id));
             if (rulesResult!=null)
             {
                 return rulesResult;
             }
-            var deletedCar = _carDal.Get(c => c.Id == carId);
+            var deletedCar = _carDal.Get(c => c.Id == car.Id);
             _carDal.Delete(deletedCar);
+            _carImageService.DeleteAllImagesOfCarByCarId(deletedCar.Id);
             return new SuccessResult(Messages.CarDeleted);
         }
 

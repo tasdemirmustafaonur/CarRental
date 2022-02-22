@@ -39,14 +39,14 @@ namespace Business.Concrete
         //[SecuredOperation("admin,color.all,color.delete")]
         [ValidationAspect(typeof(ColorValidator))]
         [CacheRemoveAspect("IColorService.Get")]
-        public IResult Delete(int colorId)
+        public IResult Delete(Color color)
         {
-            IResult rulesResult = BusinessRules.Run(CheckIfColorIdExist(colorId));
+            IResult rulesResult = BusinessRules.Run(CheckIfColorIdExist(color.Id));
             if (rulesResult!=null)
             {
                 return rulesResult;
             }
-            var deletedColor = _colorDal.Get(c => c.Id == colorId);
+            var deletedColor = _colorDal.Get(c => c.Id == color.Id);
             _colorDal.Delete(deletedColor);
             return new SuccessResult(Messages.ColorDeleted);
         }
@@ -68,6 +68,7 @@ namespace Business.Concrete
         //[SecuredOperation("admin,color.all,color.update")]
         [ValidationAspect(typeof(ColorValidator))]
         [CacheRemoveAspect("IColorService.Get")]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Color color)
         {
             IResult rulesResult = BusinessRules.Run(CheckIfColorIdExist(color.Id), CheckIfColorNameExist(color.Name));
