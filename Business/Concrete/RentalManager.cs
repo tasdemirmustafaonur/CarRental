@@ -13,6 +13,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.Models;
 
 namespace Business.Concrete
 {
@@ -161,7 +162,7 @@ namespace Business.Concrete
         //[SecuredOperation("admin,rental.all,rental.rent,customer")]
         [ValidationAspect(typeof(RentPaymentRequestValidator))]
         [TransactionScopeAspect]
-        public IDataResult<int> Rent(RentPaymentRequest rentPaymentRequest)
+        public IDataResult<int> Rent(RentPaymentRequestModel rentPaymentRequest)
         {
             //Get CreditCard
             var creditCardResult = _creditCardService.Get(rentPaymentRequest.CardNumber, rentPaymentRequest.ExpireYear, rentPaymentRequest.ExpireMonth, rentPaymentRequest.Cvc, rentPaymentRequest.CardHolderFullName.ToUpper());
